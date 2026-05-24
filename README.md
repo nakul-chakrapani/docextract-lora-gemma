@@ -12,12 +12,27 @@ Scaffold for LoRA-based document extraction experiments with CORD/VRDU data, Gem
 - `configs`: YAML defaults aligned with dataclass configs.
 - `notebooks`: starter experiment notebooks.
 
+## Installation
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[all]
+```
+
+Optional installs:
+
+- `pip install -e .[dev]` for linting, testing, and notebook tooling.
+- `pip install -e .[notebook-cpu]` for data exploration on CPU-only machines.
+- `pip install -e .[train]` for full training dependencies (includes Linux-only bitsandbytes).
+- `pip install -e .[dev,notebook-cpu]` for local notebook + dev workflows.
+
 ## Quick Start
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements-train.txt -r requirements-dev.txt
+pip install -e .[dev,notebook-cpu]
 pytest -q
 ```
 

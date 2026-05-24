@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docextract-lora-gemma"
+version = "0.1.0"
+description = "Doc extraction experiments with LoRA and Gemma"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+	"PyYAML==6.0.2",
+	"pydantic==2.9.2",
+	"fastapi==0.115.5",
+	"uvicorn==0.32.0",
+]
+
+[project.optional-dependencies]
+dev = [
+	"black==24.10.0",
+	"ruff==0.7.4",
+	"mypy==1.13.0",
+	"pytest==8.3.3",
+	"pytest-cov==6.0.0",
+	"pre-commit==4.0.1",
+	"ipykernel==6.29.5",
+	"jupyter==1.1.1",
+]
+notebook-cpu = [
+	"datasets==3.1.0",
+	"evaluate==0.4.3",
+	"scikit-learn==1.5.2",
+	"transformers==4.46.3",
+]
+train = [
+	"torch==2.5.1",
+	"transformers==4.46.3",
+	"datasets==3.1.0",
+	"peft==0.13.2",
+	"accelerate==1.1.1",
+	"bitsandbytes==0.44.1; platform_system == 'Linux'",
+	"evaluate==0.4.3",
+	"scikit-learn==1.5.2",
+]
+all = [
+	"black==24.10.0",
+	"ruff==0.7.4",
+	"mypy==1.13.0",
+	"pytest==8.3.3",
+	"pytest-cov==6.0.0",
+	"pre-commit==4.0.1",
+	"ipykernel==6.29.5",
+	"jupyter==1.1.1",
+	"datasets==3.1.0",
+	"evaluate==0.4.3",
+	"scikit-learn==1.5.2",
+	"transformers==4.46.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
