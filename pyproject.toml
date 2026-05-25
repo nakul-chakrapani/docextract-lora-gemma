@@ -10,7 +10,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
 	"PyYAML==6.0.2",
-	"pydantic==2.9.2",
 	"fastapi==0.115.5",
 	"uvicorn==0.32.0",
 ]
@@ -25,6 +24,7 @@ dev = [
 	"pre-commit==4.0.1",
 	"ipykernel==6.29.5",
 	"jupyter==1.1.1",
+    "python-dotenv>=1.0.0",
 ]
 notebook-cpu = [
 	"datasets==3.1.0",
@@ -41,6 +41,7 @@ train = [
 	"bitsandbytes==0.44.1; platform_system == 'Linux'",
 	"evaluate==0.4.3",
 	"scikit-learn==1.5.2",
+    "huggingface_hub>=0.26.0",
 ]
 all = [
 	"black==24.10.0",
