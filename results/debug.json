@@ -1,0 +1,35 @@
+{
+  "model": "google/gemma-4-e4b-it",
+  "split": "validation",
+  "num_samples": 1,
+  "results": [
+    {
+      "sample_id": 0,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "REAL GANACHE",
+            "count": 1,
+            "price": 16500
+          },
+          {
+            "name": "EGG TART",
+            "count": 1,
+            "price": 13000
+          },
+          {
+            "name": "PIZZA TOAST",
+            "count": 1,
+            "price": 16000
+          }
+        ],
+        "subtotal": 45500,
+        "tax": null,
+        "total_price": 45500
+      },
+      "target": "{\"menu\": [{\"name\": \"REAL GANACHE\", \"count\": \"1\", \"price\": 16500.0}, {\"name\": \"EGG TART\", \"count\": \"1\", \"price\": 13000.0}, {\"name\": \"PIZZA TOAST\", \"count\": \"1\", \"price\": 16000.0}], \"tax\": 0.0, \"total\": 45500.0}",
+      "latency_ms": 15877.539674052969,
+      "valid": true
+    }
+  ]
+}

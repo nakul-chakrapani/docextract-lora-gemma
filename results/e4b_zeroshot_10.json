@@ -1,0 +1,202 @@
+{
+  "model": "google/gemma-4-e4b-it",
+  "split": "validation",
+  "num_samples": 10,
+  "results": [
+    {
+      "sample_id": 0,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "REAL GANACHE",
+            "count": 1,
+            "price": 16500
+          },
+          {
+            "name": "EGG TART",
+            "count": 1,
+            "price": 13000
+          },
+          {
+            "name": "PIZZA TOAST",
+            "count": 1,
+            "price": 16000
+          }
+        ],
+        "subtotal": 45500,
+        "tax": null,
+        "total_price": 45500
+      },
+      "target": "{\"menu\": [{\"name\": \"REAL GANACHE\", \"count\": \"1\", \"price\": 16500.0}, {\"name\": \"EGG TART\", \"count\": \"1\", \"price\": 13000.0}, {\"name\": \"PIZZA TOAST\", \"count\": \"1\", \"price\": 16000.0}], \"tax\": 0.0, \"total\": 45500.0}",
+      "latency_ms": 15672.458739951253,
+      "valid": true
+    },
+    {
+      "sample_id": 1,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "Kopi Susu Kolonel",
+            "count": 1,
+            "price": 23000
+          }
+        ],
+        "subtotal_tax": null,
+        "total_price": 50000
+      },
+      "target": "{\"menu\": [{\"name\": \"Kopi Susu Kolonel\", \"count\": \"1\", \"price\": 23.0}], \"tax\": 0.0, \"total\": 23.0}",
+      "latency_ms": 7328.831999097019,
+      "valid": true
+    },
+    {
+      "sample_id": 2,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "S-Ovaltine",
+            "count": 1,
+            "price": 20000
+          }
+        ],
+        "subtotal": 20000,
+        "tax": 20000,
+        "total_price": 100000
+      },
+      "target": "{\"menu\": [{\"name\": \"S-Ovaltine 50%\", \"count\": \"1\", \"price\": 20000.0}], \"tax\": 1818.0, \"total\": 20000.0}",
+      "latency_ms": 8625.773637089878,
+      "valid": true
+    },
+    {
+      "sample_id": 3,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "M-Caramel Black Tea",
+            "count": 1,
+            "price": 28000
+          }
+        ],
+        "subtotal": 28000,
+        "tax": null,
+        "total_price": 28000
+      },
+      "target": "{\"menu\": [{\"name\": \"M-Caramel Black Tea\", \"count\": \"1X\", \"price\": 28000.0}], \"tax\": 0.0, \"total\": 28000.0}",
+      "latency_ms": 8084.830400068313,
+      "valid": true
+    },
+    {
+      "sample_id": 4,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "BBQ Chicken",
+            "count": 1,
+            "price": 41000
+          }
+        ],
+        "subtotal": 41000,
+        "tax": 0,
+        "total_price": 41000
+      },
+      "target": "{\"menu\": [{\"name\": \"BBQ Chicken\", \"count\": \"1\", \"price\": 41000.0}], \"tax\": 0.0, \"total\": 41000.0}",
+      "latency_ms": 8144.029420800507,
+      "valid": true
+    },
+    {
+      "sample_id": 5,
+      "prediction": {
+        "menu_items": [],
+        "subtotal_tax": null,
+        "total_price": "\u0e3f8,000"
+      },
+      "target": "{\"menu\": [{\"name\": \"LE MINERAL\", \"count\": \"1.00\", \"price\": 8000.0}], \"tax\": 727.0, \"total\": 8000.0}",
+      "latency_ms": 3810.9374968335032,
+      "valid": true
+    },
+    {
+      "sample_id": 6,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "POTATO SAUSAGE BREAD",
+            "count": 1,
+            "price": 19000
+          },
+          {
+            "name": "OREO GREEN TEA SPREAD",
+            "count": 1,
+            "price": 52000
+          },
+          {
+            "name": "WHITE CHOCO BANANA SPREAD",
+            "count": 1,
+            "price": 52000
+          }
+        ],
+        "subtotal": 123000,
+        "tax": null,
+        "total_price": 123000
+      },
+      "target": "{\"menu\": [{\"name\": \"POTATO SAUSAGE BREAD\", \"count\": \"1\", \"price\": 19000.0}, {\"name\": \"OREO GREEN TEA SPREAD\", \"count\": \"1\", \"price\": 52000.0}, {\"name\": \"WHITE CHOCO BANANA SPREAD\", \"count\": \"1\", \"price\": 52000.0}], \"tax\": 0.0, \"total\": 123000.0}",
+      "latency_ms": 15815.588324097916,
+      "valid": true
+    },
+    {
+      "sample_id": 7,
+      "prediction": null,
+      "target": "{\"menu\": [{\"name\": \"Choco Devil\", \"count\": \"4\", \"price\": 63636.0}], \"tax\": 5409.0, \"total\": 59500.0}",
+      "latency_ms": 8238.320220960304,
+      "valid": false
+    },
+    {
+      "sample_id": 8,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "TALAM UNGU",
+            "count": 3,
+            "price": 19500
+          },
+          {
+            "name": "DISC ITEM",
+            "count": 1,
+            "price": -40000
+          },
+          {
+            "name": "AMOUNT",
+            "count": 1,
+            "price": -7800
+          },
+          {
+            "name": "MIKA KECIL",
+            "count": 1,
+            "price": 0
+          }
+        ],
+        "subtotal": 4000,
+        "tax": null,
+        "total_price": 11700
+      },
+      "target": "{\"menu\": [{\"name\": \"TALAM UNGU\", \"count\": \"3X\", \"price\": 19500.0}, {\"name\": \"MIKA KECIL\", \"count\": \"1X\", \"price\": 0.0}], \"tax\": 0.0, \"total\": 11700.0}",
+      "latency_ms": 17022.859140997753,
+      "valid": true
+    },
+    {
+      "sample_id": 9,
+      "prediction": {
+        "menu_items": [
+          {
+            "name": "Tahu Ikan Oma Giok",
+            "count": 1,
+            "price": 20000
+          }
+        ],
+        "subtotal_tax": null,
+        "total_price": 20000
+      },
+      "target": "{\"menu\": [{\"name\": \"Tahu Ikan Oma Giok\", \"count\": \"1\", \"price\": 20000.0}], \"tax\": 0.0, \"total\": 20000.0}",
+      "latency_ms": 7536.738072987646,
+      "valid": true
+    }
+  ]
+}

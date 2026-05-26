@@ -1,0 +1,24 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/docextract-lora-gemma/src/inference/batch_eval.py", line 67, in <module>
+    main()
+  File "/workspace/docextract-lora-gemma/src/inference/batch_eval.py", line 32, in main
+    model, processor = load_model(args.model)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/docextract-lora-gemma/src/inference/predict.py", line 80, in load_model
+    processor = AutoProcessor.from_pretrained(model_name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/docextract-lora-gemma/venv/lib/python3.11/site-packages/transformers/models/auto/processing_auto.py", line 438, in from_pretrained
+    return processor_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/docextract-lora-gemma/venv/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2077, in __getattribute__
+    requires_backends(cls, cls._backends)
+  File "/workspace/docextract-lora-gemma/venv/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2063, in requires_backends
+    raise ImportError("".join(failed))
+ImportError: 
+Gemma4Processor requires the PIL library but it was not found in your environment. You can install it with pip:
+`pip install pillow`. Please note that you may need to restart your runtime after installation.
+
