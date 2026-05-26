@@ -69,6 +69,7 @@ def _extract_target_json(gt_parse: str) -> ReceiptSchema:
             name = item.get("nm", "")
             count = item.get("cnt", "")
             count = count.split(" ")[0] if count else ""
+            count = count.replace("x", "").replace("X", "").strip()
             price = _parse_price(item.get("price", "0.0"))
             menu_item = MenuItem(name=name, count=count, price=price)
             final_menu_items.append(menu_item)

@@ -30,18 +30,21 @@ notebook-cpu = [
 	"datasets==3.1.0",
 	"evaluate==0.4.3",
 	"scikit-learn==1.5.2",
-	"transformers==4.46.3",
+	"transformers==5.9.0",
 ]
 train = [
+    "pytest==8.3.3",
 	"torch==2.5.1",
-	"transformers==4.46.3",
+    "torchvision==0.27.0",
+	"transformers==5.9.0",
 	"datasets==3.1.0",
 	"peft==0.13.2",
 	"accelerate==1.1.1",
-	"bitsandbytes==0.44.1; platform_system == 'Linux'",
+	"bitsandbytes==0.46.1; platform_system == 'Linux'",
 	"evaluate==0.4.3",
 	"scikit-learn==1.5.2",
     "huggingface_hub>=0.26.0",
+    "pillow==12.2.0",
 ]
 all = [
 	"black==24.10.0",
@@ -55,7 +58,8 @@ all = [
 	"datasets==3.1.0",
 	"evaluate==0.4.3",
 	"scikit-learn==1.5.2",
-	"transformers==4.46.3",
+	"transformers==5.9.0",
+    "pillow==12.2.0",
 ]
 
 [tool.setuptools.packages.find]
