@@ -40,9 +40,22 @@ def parse_model_output(output: str) -> dict[str, Any] | None:
     
     try:
         model_output = output.split(marker)[-1].strip()
+        # strip thinking block if present
+        if "<channel|>" in model_output:
+            model_output = model_output.split("<channel|>")[-1].strip()
+
         model_output = model_output.replace("```json", "").replace("```", "").strip()
         model_output = model_output.replace("<end_of_turn>", "").replace("<turn|>", "").strip()
-        return json.loads(model_output)
+
+        # extract just the JSON object
+        start = model_output.find("{")
+        end = model_output.rfind("}") + 1
+        if start == -1 or end == 0:
+            return None
+            
+        # print(f"DEBUG raw: {model_output[:300]}")
+        json_str = model_output[start:end]
+        return json.loads(json_str)
     except json.JSONDecodeError as je:
         print(f"Error parsing model output JSON: {je}")
         return None
