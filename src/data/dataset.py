@@ -60,6 +60,9 @@ def _extract_target_json(gt_parse: str) -> ReceiptSchema:
 
     try:
         menu = parsed.get("menu", [])
+        # normalize dict to list for single item receipts
+        if isinstance(menu, dict):
+            menu = [menu]
 
         # get menu items from gt_parse
         for item in menu:

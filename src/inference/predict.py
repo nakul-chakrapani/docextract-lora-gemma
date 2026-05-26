@@ -41,7 +41,7 @@ def parse_model_output(output: str) -> dict[str, Any] | None:
     try:
         model_output = output.split(marker)[-1].strip()
         model_output = model_output.replace("```json", "").replace("```", "").strip()
-        model_output = model_output.replace("<end_of_turn>", "").strip()
+        model_output = model_output.replace("<end_of_turn>", "").replace("<turn|>", "").strip()
         return json.loads(model_output)
     except json.JSONDecodeError as je:
         print(f"Error parsing model output JSON: {je}")
@@ -78,7 +78,8 @@ def load_model(model_name: str) -> tuple:
     # it's None on Mac which just loads without quantization
 
     processor = AutoProcessor.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=quantization_config, device_map="auto")
+    # model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=quantization_config, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.bfloat16, device_map="auto")
     return model, processor
 
 def run_inference(model: Any, processor: Any, image: Any, prompt: str) -> tuple[str, float]:

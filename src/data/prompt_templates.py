@@ -16,7 +16,7 @@ def build_gemma4_multimodal_prompt(context: str | None = None) -> str:
     instruction: str = "Extract all fields from this receipt as a JSON object.\nReturn only valid JSON with no explanation.\nFields: menu items (name, count, price), subtotal tax, total price"
 
     user_message: str = (
-        "<image>\n"
+        "<|image|>\n"
         f"Task:\n{instruction.strip()}"
         f"{context_block}"
     )
