@@ -28,7 +28,7 @@ class TrainingConfig:
     learning_rate: float = 2e-4
     warmup_ratio: float = 0.03
     weight_decay: float = 0.01
-    max_seq_length: int = 2048
+    max_seq_length: int = 1024
     logging_steps: int = 10
     eval_steps: int = 100
     save_steps: int = 100
