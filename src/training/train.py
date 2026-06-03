@@ -12,8 +12,8 @@ from peft import prepare_model_for_kbit_training
 from src.training.config import LoRAConfig, TrainingConfig
 from src.data.dataset import load_cord
 from trl import SFTConfig, SFTTrainer
+from torch.nn.utils.rnn import pad_sequence
 
-import yaml
 from dataclasses import fields
 
 
@@ -29,7 +29,7 @@ def create_quantization_config() -> BitsAndBytesConfig:
 
     return quantization_config
 
-def create_lora_config(cfg: LoRAConfig) -> LoraConfig:
+def create_lora_config(cfg: LoRAConfig, target_modules: list[str]) -> LoraConfig:
     """Create a LoRAConfig instance with default values."""
     
     lora_config = LoraConfig(
@@ -38,10 +38,19 @@ def create_lora_config(cfg: LoRAConfig) -> LoraConfig:
         lora_dropout=cfg.lora_dropout,
         bias=cfg.bias,
         task_type=cfg.task_type,
-        target_modules=cfg.target_modules,
+        target_modules=target_modules,
     )
     return lora_config
 
+def get_target_modules(model) -> list[str]:
+    target_modules = set()
+    for name, module in model.named_modules():
+        if type(module).__name__ == "Gemma4TextAttention":
+            for child_name, child_module in module.named_children():
+                if type(child_module).__name__ == "Linear4bit":
+                    if child_name in ["q_proj", "k_proj", "v_proj", "o_proj"]:
+                        target_modules.add(f"{name}.{child_name}")
+    return list(target_modules)
 
 def load_model_and_processor(model_name: str, quantization_config: BitsAndBytesConfig):
     """Load the pre-trained model and processor with quantization."""
@@ -68,22 +77,46 @@ def make_collate_fn(processor):
         images = [s["image"] for s in samples]
         prompts = [s["prompt"] for s in samples]
         targets = [s["target"] for s in samples]
-
+    
         texts = [p + t for p, t in zip(prompts, targets)]
-        inputs = processor(images=images, text=texts, return_tensors="pt")
-
-        labels = inputs["input_ids"].clone()
-        prompt_only = processor(images=images, text=prompts, return_tensors="pt")
-        prompt_lengths = (prompt_only["input_ids"] != processor.tokenizer.pad_token_id).sum(dim=1)
-
-        # mask the prompt tokens
-        for i, prompt_length in enumerate(prompt_lengths):
+        
+        all_inputs = [processor(images=img, text=txt, return_tensors="pt") 
+                      for img, txt in zip(images, texts)]
+        
+        all_prompt_inputs = [processor(images=img, text=p, return_tensors="pt")
+                             for img, p in zip(images, prompts)]
+    
+        pad_id = processor.tokenizer.pad_token_id
+    
+        input_ids = pad_sequence(
+            [x["input_ids"].squeeze(0) for x in all_inputs],
+            batch_first=True, padding_value=pad_id
+        )
+        attention_mask = pad_sequence(
+            [x["attention_mask"].squeeze(0) for x in all_inputs],
+            batch_first=True, padding_value=0
+        )
+        mm_token_type_ids = pad_sequence(
+            [x["mm_token_type_ids"].squeeze(0) for x in all_inputs],
+            batch_first=True, padding_value=0
+        )
+        pixel_values = torch.cat([x["pixel_values"] for x in all_inputs], dim=0)
+        image_position_ids = torch.cat([x["image_position_ids"] for x in all_inputs], dim=0)
+    
+        labels = input_ids.clone()
+        for i, prompt_input in enumerate(all_prompt_inputs):
+            prompt_length = (prompt_input["input_ids"] != pad_id).sum().item()
             labels[i, :prompt_length] = -100
-
+    
+        # mask padding tokens in labels too
+        labels[input_ids == pad_id] = -100
+    
         return {
-            "input_ids": inputs["input_ids"],
-            "attention_mask": inputs["attention_mask"],
-            "pixel_values": inputs["pixel_values"],
+            "input_ids": input_ids,
+            "attention_mask": attention_mask,
+            "mm_token_type_ids": mm_token_type_ids,
+            "pixel_values": pixel_values,
+            "image_position_ids": image_position_ids,
             "labels": labels,
         }
     return collate_fn
@@ -131,7 +164,7 @@ def run_training(model: AutoModelForCausalLM, processor: AutoProcessor,
     # Build SFTConfig for trl trainer
     training_args = SFTConfig(
         output_dir=train_cfg.output_dir,
-        max_seq_length=train_cfg.max_seq_length,
+        max_length=train_cfg.max_length,
         per_device_train_batch_size=train_cfg.per_device_train_batch_size,
         learning_rate=train_cfg.learning_rate,
         num_train_epochs=train_cfg.num_train_epochs,
@@ -141,16 +174,20 @@ def run_training(model: AutoModelForCausalLM, processor: AutoProcessor,
         bf16=train_cfg.bf16,
         save_strategy="epoch",
         gradient_checkpointing=True,
+        remove_unused_columns=False,
         dataset_kwargs={"skip_prepare_dataset": True}
         )
     
     train_dataset = load_cord(split="train")
 
+    target_modules = get_target_modules(model)
+    # print(f"Target modules found: {target_modules}")
+
     trainer = SFTTrainer(
         model=model,
         train_dataset=train_dataset,
         args=training_args,
-        peft_config=create_lora_config(lora_cfg),
+        peft_config=create_lora_config(lora_cfg, target_modules),
         data_collator=make_collate_fn(processor),
     )
 

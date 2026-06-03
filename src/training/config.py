@@ -12,6 +12,7 @@ class LoRAConfig:
     lora_dropout: float = 0.05
     bias: str = "none"
     task_type: str = "CAUSAL_LM"
+    exclude_modules: list[str] = field(default_factory=lambda: ["vision_tower", "audio_tower", "embed_vision", "embed_audio"])
     target_modules: list[str] = field(default_factory=lambda: ["q_proj", "k_proj", "v_proj", "o_proj"])
 
 
@@ -20,7 +21,7 @@ class TrainingConfig:
     """Configuration for model fine-tuning and evaluation scheduling."""
 
     model_name_or_path: str = "google/gemma-2-2b"
-    output_dir: str = "checkpoints/docextract-lora"
+    output_dir: str = "/teamspace/studios/this_studio/checkpoints"
     num_train_epochs: int = 3
     per_device_train_batch_size: int = 2
     per_device_eval_batch_size: int = 2
@@ -28,9 +29,10 @@ class TrainingConfig:
     learning_rate: float = 2e-4
     warmup_ratio: float = 0.03
     weight_decay: float = 0.01
-    max_seq_length: int = 1024
+    max_length: int = 1024
     logging_steps: int = 10
     eval_steps: int = 100
     save_steps: int = 100
     seed: int = 42
     bf16: bool = True
+    report_to: str = "none"

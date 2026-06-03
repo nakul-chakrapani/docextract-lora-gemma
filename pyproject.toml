@@ -45,6 +45,7 @@ train = [
     "scikit-learn==1.5.2",
     "huggingface_hub>=0.26.0",
     "pillow>=10.0.0",
+    "trl",
 ]
 all = [
 	"black==24.10.0",
